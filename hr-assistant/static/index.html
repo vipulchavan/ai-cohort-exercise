@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f5f1">
+  <title>HR Desk</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/chat.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="HR Desk home">
+        <span class="brand-mark" aria-hidden="true">H</span>
+        <span class="brand-name">people<span>/</span>desk</span>
+      </a>
+      <div class="topbar-meta">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span>HR assistant</span>
+      </div>
+    </header>
+
+    <main class="chat-layout">
+      <section class="chat-panel" aria-labelledby="page-title">
+        <div class="chat-heading">
+          <div>
+            <p class="eyebrow">PEOPLE OPERATIONS</p>
+            <h1 id="page-title">HR Desk</h1>
+          </div>
+          <span class="heading-mark" aria-hidden="true">01</span>
+        </div>
+
+        <div id="conversation" class="conversation" role="log" aria-live="polite" aria-relevant="additions">
+          <article class="message assistant-message">
+            <div class="avatar assistant-avatar" aria-hidden="true">H</div>
+            <div class="message-body">
+              <div class="message-meta"><span>HR Assistant</span><time>Now</time></div>
+              <p class="message-text">Hi, I'm your HR assistant. What can I help you with today?</p>
+            </div>
+          </article>
+        </div>
+
+        <form id="chat-form" class="composer">
+          <label class="visually-hidden" for="prompt-input">Your message</label>
+          <textarea id="prompt-input" name="user_input" rows="1" placeholder="Ask a question..." required></textarea>
+          <div class="composer-footer">
+            <span class="composer-note">Your conversation is ready</span>
+            <button id="send-button" type="submit" aria-label="Send message">
+              <span>Send</span>
+              <span class="send-arrow" aria-hidden="true">&#8599;</span>
+            </button>
+          </div>
+        </form>
+        <p id="error-message" class="error-message" role="alert" hidden></p>
+      </section>
+    </main>
+    <footer class="page-footer"><span>PEOPLE / DESK</span><span>HR SUPPORT</span></footer>
+  </div>
+</body>
+</html>
