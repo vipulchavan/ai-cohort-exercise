@@ -3,6 +3,7 @@ const input = document.querySelector('#prompt-input');
 const sendButton = document.querySelector('#send-button');
 const conversation = document.querySelector('#conversation');
 const errorMessage = document.querySelector('#error-message');
+let conversationId = null;
 
 function addMessage(role, content, tokenUsage = null) {
   const isAssistant = role === 'assistant';
@@ -78,10 +79,11 @@ form.addEventListener('submit', async (event) => {
     const response = await fetch('/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user_input: userInput }),
+      body: JSON.stringify({ user_input: userInput, conversation_id: conversationId }),
     });
     const result = await response.json();
     if (!response.ok) throw new Error(result.detail || result.error || 'The assistant could not respond.');
+    conversationId = result.conversation_id;
     typingMessage.remove();
     addMessage('assistant', result.content, result);
   } catch (error) {
