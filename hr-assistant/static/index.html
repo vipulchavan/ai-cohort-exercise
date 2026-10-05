@@ -22,6 +22,15 @@
     </header>
 
     <main class="chat-layout">
+      <aside class="conversation-sidebar" aria-label="Conversation history">
+        <div class="sidebar-heading">
+          <h2>Your conversations</h2>
+          <button id="new-chat-button" class="new-chat-button" type="button">New chat</button>
+        </div>
+        <p id="conversation-status" class="conversation-status" aria-live="polite">Loading conversations...</p>
+        <nav id="conversation-list" class="conversation-list" aria-label="Saved conversations"></nav>
+      </aside>
+
       <section class="chat-panel" aria-labelledby="page-title">
         <div class="chat-heading">
           <div>

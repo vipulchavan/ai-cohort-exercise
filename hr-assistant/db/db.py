@@ -11,7 +11,7 @@ def create_conversation(title):
     return new_conversation
 
 def list_conversations():
-    return db_session.query(Conversation).all()
+    return db_session.query(Conversation).order_by(Conversation.id.desc()).all()
 
 def create_chat_message(conversation_id:str, text:str, role:str, tokens_spent:int=0):
     new_message = ChatMessage(conversation_id=conversation_id, role=role, text=text, tokens_spent=tokens_spent)
@@ -21,7 +21,7 @@ def create_chat_message(conversation_id:str, text:str, role:str, tokens_spent:in
     return new_message
 
 def list_messages_in_conversation(conversation_id):
-    return db_session.query(ChatMessage).filter(ChatMessage.conversation_id == conversation_id).all()
+    return db_session.query(ChatMessage).filter(ChatMessage.conversation_id == conversation_id).order_by(ChatMessage.id.asc()).all()
 
 def update_tokens_usage(conversation_id, tokens_spent):
     conversation = db_session.query(Conversation).filter(Conversation.id == conversation_id).first()
