@@ -37,15 +37,15 @@ def chat_with_hr_assistant(user_input: str):
 
 
 @app.post("/chat")
-def chat_with_hr_assistant_post(request: ChatRequest):
+def chat_with_hr_assistant_post(user_input: str, conversation_id: int | None = None):
     
-    response, conversation_id =  call_llm(request.user_input, request.conversation_id)
+    response =  call_llm(user_input, conversation_id)
     print(f"LLM response: {response}")
-    create_chat_message(conversation_id=conversation_id, text=request.user_input, role="user", tokens_spent=response["input_tokens"])
-    create_chat_message(conversation_id=conversation_id, text=response["content"], role="assistant", tokens_spent=response["output_tokens"])
+    create_chat_message(conversation_id=response["conversation_id"], text=user_input, role="user", tokens_spent=response["input_tokens"])
+    create_chat_message(conversation_id=response["conversation_id"], text=response["content"], role="assistant", tokens_spent=response["output_tokens"])
     
-    update_tokens_usage(conversation_id, response["total_tokens"])
-    return {**response, "conversation_id": conversation_id}
+    update_tokens_usage(response["conversation_id"], response["total_tokens"])
+    return {"response" : response}
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="localhost", port=8000, reload=True)
+    uvicorn.run("main:app", host="localhost", port=8000)

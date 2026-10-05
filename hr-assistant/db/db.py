@@ -1,5 +1,5 @@
 from db.models import DB_PATH
-from db.models import Conversation, ChatMessage
+from db.models import Conversation, ChatMessage, ConversationSummary
 from sqlalchemy.orm import sessionmaker  
 from sqlalchemy import engine, create_engine
 
@@ -29,19 +29,22 @@ def update_tokens_usage(conversation_id, tokens_spent):
         conversation.tokens_spent += tokens_spent
         db_session.commit()
 
-def update_conversation_summary(conversation_id, summary):
+def update_conversation_summary(conversation_id, summary, last_message_id):
     # Check if a summary already exists for the conversation
     existing_summary = db_session.query(ConversationSummary).filter(ConversationSummary.conversation_id == conversation_id).first()
     
     if existing_summary:
         # Update the existing summary
         existing_summary.summary_text = summary
+        existing_summary.last_message_id = last_message_id
     else:
         # Create a new summary
-        new_summary = ConversationSummary(conversation_id=conversation_id, summary_text=summary)
+        new_summary = ConversationSummary(conversation_id=conversation_id, summary_text=summary, last_message_id=last_message_id)
         db_session.add(new_summary)
+        
     
     db_session.commit()
+    
 
 def get_conversation_summary(conversation_id):
     return db_session.query(ConversationSummary).filter(ConversationSummary.conversation_id == conversation_id).first() 
